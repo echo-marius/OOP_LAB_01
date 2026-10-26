@@ -14,7 +14,7 @@ public class Logger
 {
     private static readonly Random _rng = new Random();
     public string Name { get; set; }
-    public string Format { get; set; }
+    public static string Format { get; set; }
     public static LogLevel Level { get; set; } = LogLevel.Trace;
 
     public Logger(string name)

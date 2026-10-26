@@ -2,7 +2,7 @@
 
 Logger logger = new Logger("logger__v1");
 
-logger.Format = "[%t] [%l] %n: %m %r";
+Logger.Format = "[%t] [%l] %n: %m %r";
 Logger.Level = LogLevel.Trace;
 
 ParenthesesValidator parenthesesValidator = new ParenthesesValidator(logger);
