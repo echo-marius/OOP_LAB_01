@@ -14,7 +14,7 @@ public class Logger
 {
     private static readonly Random _rng = new Random();
     public string Name { get; set; }
-    public static string Format { get; set; }
+    public static string Format { get; set; } = "[%t] [%l] %n: %m %r";
     public static LogLevel Level { get; set; } = LogLevel.Trace;
 
     public Logger(string name)
@@ -65,18 +65,19 @@ public class Logger
     }
     public void Log(LogLevel level, string message)
     {
-        if (level < Level || String.IsNullOrWhiteSpace(message))
+        if (level < Level || String.IsNullOrWhiteSpace(message) ||  String.IsNullOrWhiteSpace(Format))
         {
             return;
         }
         StringBuilder builder = new StringBuilder();
         builder.Append(Format);
         
-        builder.Replace("%t", TimeOnly.FromDateTime(DateTime.Now).ToString());
-        builder.Replace("%m", message);
+        builder.Replace("%t", TimeOnly.FromDateTime(DateTime.Now).ToString("HH:mm:ss"));
         builder.Replace("%n", this.Name);
         builder.Replace("%l", level.ToString());
         builder.Replace("%r",GetRandomString(Level));
+        builder.Replace("%m", message);
+        
         Console.WriteLine(builder.ToString());
     }
 }

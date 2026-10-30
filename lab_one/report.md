@@ -79,7 +79,7 @@ public class Logger
 
     public void Log(LogLevel level, string message)
     {
-        if (level < Level || String.IsNullOrWhiteSpace(message))
+        if (level < Level || String.IsNullOrWhiteSpace(message) ||  String.IsNullOrWhiteSpace(Format))
         {
             return;
         }
@@ -87,7 +87,7 @@ public class Logger
         StringBuilder builder = new StringBuilder();
         builder.Append(Format);
 
-        builder.Replace("%t", TimeOnly.FromDateTime(DateTime.Now).ToString());
+        builder.Replace("%t", TimeOnly.FromDateTime(DateTime.Now).ToString("HH:mm:ss"));
         builder.Replace("%m", message);
         builder.Replace("%n", this.Name);
         builder.Replace("%l", level.ToString());
@@ -272,4 +272,3 @@ The most important OOP concept applied was **Encapsulation and Separation of Con
 ### **If you had more time, what would you improve in your design, and why?**
 1. **Interface Abstraction:** Introduce an `ILogger` interface that `Logger` implements. This would allow `ParenthesesValidator` to depend on an abstraction rather than a concrete class, making unit testing and swapping logger implementations easier.
 2. **Support for Multiple Bracket Types:** Extend `ParenthesesValidator` using a `Stack<char>` instead of a single integer counter to support matching combinations of `()`, `[]`, and `{}`.
-3. **Thread Safety:** Ensure `_rng` and static logging properties are thread-safe if logging is invoked concurrently across multiple threads.
